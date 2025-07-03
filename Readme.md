@@ -75,7 +75,6 @@ SIP-BERT/
 ```
 
 ## Output Structure
-Create a empty Output folder
 Results are organized by species in the output directory:
 ```
 Output/
