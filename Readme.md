@@ -1,0 +1,153 @@
+# Self Interacting Protein Prediction with SIP-BERT
+
+## Project Overview
+This repository implements SIP-BERT, a deep learning model for protein-protein interaction (PPI) prediction that integrates protein sequence data with Gene Ontology (GO) annotations. The model uses a hybrid architecture combining convolutional neural networks with global attention mechanisms to capture both local sequence patterns and global functional information.
+
+## Input Data Structure
+Organize your data as follows for each species (Human, Yeast, Fruitfly, Mouse):
+```
+Dataset/{Species}
+├── GO_annotation_{species}.csv
+├── {species}.test.csv
+├── {species}_1.train.csv
+├── {species}_1.valid.csv
+├── {species}_2.train.csv
+├── {species}_2.valid.csv
+...
+├── {species}_10.train.csv
+└── {species}_10.valid.csv
+```
+
+### File Descriptions
+1. **GO Annotation File** (`GO_annotation.csv`)
+   - Contains protein-level Gene Ontology annotations
+   - Required columns:
+     - `Protein`: Protein identifier
+     - `Gene Ontology (biological process) Count`
+     - `Gene Ontology (molecular function) Count`
+     - `Gene Ontology (cellular component) Count`
+     - The go annotation can also be downloaded from [Uniprot ](https://www.uniprot.org/) and then excecute Go_annot_curate.py to get the model required GO_annotation
+
+2. **Test File** (`{species}.test.csv`)
+   - Contains the test dataset for final evaluation
+   - Required columns:
+     - `Protein`: Protein identifier
+     - `seq`: Protein sequence
+     - `label`: Binary interaction label (0/1)
+
+3. **Training/Validation Files**
+   - 10 pairs of training/validation files (fold 1-10)
+   - Naming convention: `{species}_{fold_number}.{train/valid}.csv`
+   - Same columns as test file
+
+## Installation
+bash command
+# Clone repository
+```bash
+git clone https://github.com/CMATERJU-BIOINFO/SIP-BERT.git
+cd SIP-BERT
+```
+# Install dependencies
+```bash
+pip install tensorflow pandas numpy scikit-learn matplotlib
+```
+```
+SIP-BERT/
+├── Dataset/                # Input data (organized by species)
+├── Output/                 # Output directory (created during execution)
+├── src/
+│   ├── main.py             # Main execution script
+│   ├── model.py            # Model architecture implementation
+│   ├── preprocess.py       # Data preprocessing utilities
+│   └── train_eval.py       # Training and evaluation functions
+└── README.md
+```
+
+
+## Execution
+1. **Configure paths in src/main.py**
+```bash 
+    SPECIES = ['Human', 'Yeast', 'Fruitfly', 'Mouse']
+    BASE_DATA_PATH = 'data'  # Path to species folders
+    OUTPUT_DIR = "results"
+    FIXED_LENGTH = 256       # Protein sequence length
+    - python src/main.py
+```
+
+## Output Structure
+Results are organized by species in the output directory:
+```
+Output/
+├── Human/
+│   ├── fold1/
+│   │   ├── best_model.keras          # Trained model weights
+│   │   ├── training_history.png      # Training/validation metrics plot
+│   │   ├── roc_curve.png             # Validation ROC curve
+│   │   ├── pr_curve.png              # Validation PR curve
+│   │   ├── val_metrics.txt           # Validation metrics
+│   │   ├── test_results.csv          # Test set predictions
+│   │   └── test_metrics.txt          # Test set metrics
+│   ├── fold2/
+│   │   └── ... (same files as fold1)
+│   ├── ... (fold3 to fold10)
+│   ├── all_folds_test_roc.png        # Combined test ROC curves
+│   ├── final_results.csv             # Aggregated fold performance
+│   └── summary.txt                   # Performance summary
+├── Yeast/
+│   └── ... (same structure as Human)
+├── Fruitfly/
+│   └── ... (same structure as Human)
+└── Mouse/
+    └── ... (same structure as Human)
+```
+
+
+## Model Parameters
+Key parameters in src/model.py:
+```bash
+d_hidden_seq = 128          # Sequence embedding dimension
+d_hidden_global = 512       # GO annotation embedding dimension
+n_blocks = 6                # Number of processing blocks
+n_heads = 4                 # Attention heads
+d_key = 64                  # Attention key dimension
+conv_kernel_size = 9        # Convolution kernel size
+wide_conv_dilation_rate = 5 # Dilation rate for wide convolution
+dropout_rate = 0.5          # Dropout rate
+```
+## Results Interpretation
+Output files include:
+
+Validation Metrics (per fold):
+
+ROC-AUC: Area under Receiver Operating Characteristic curve
+
+PR-AUC: Area under Precision-Recall curve
+
+Optimal Threshold: Best classification threshold
+
+Confusion Matrix: TP, FP, TN, FN counts
+
+Classification Report: Precision, Recall, F1-score
+
+**Test Results:**
+
+test_results.csv: Predictions with probabilities
+
+test_metrics.txt: Comprehensive test performance
+
+**Aggregate Results:**
+
+final_results.csv: ROC-AUC scores across all folds
+
+summary.txt: Average performance metrics
+
+all_folds_test_roc.png: Combined ROC curves for all folds
+
+**Customization**
+Modify these aspects in the code:
+
+Data paths: Update BASE_DATA_PATH in main.py
+
+Model architecture: Adjust parameters in model.py
+
+Training parameters: Modify epochs, batch size in train_eval.py
