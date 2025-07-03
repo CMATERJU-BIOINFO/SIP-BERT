@@ -1,0 +1,2 @@
+# This file ensures the Output directory is tracked by Git
+# Output files will be generated here during model training and evaluation
