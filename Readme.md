@@ -85,7 +85,7 @@ Results are organized by species in the output directory:
 Output/
 ├── Human/
 │   ├── fold1/
-│   │   ├── best_model.keras          # Trained model weights
+│   │   ├── best_model.ke ras          # Trained model weights
 │   │   ├── training_history.png      # Training/validation metrics plot
 │   │   ├── roc_curve.png             # Validation ROC curve
 │   │   ├── pr_curve.png              # Validation PR curve
