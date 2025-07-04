@@ -1,7 +1,9 @@
-# Self Interacting Protein Prediction with SIP-BERT
+# SIP-BERT : A multi-organism deep strategy for predicting self interaction in proteins
 
 ## Project Overview
-This repository implements SIP-BERT, a deep learning model for protein-protein interaction (PPI) prediction that integrates protein sequence data with Gene Ontology (GO) annotations. The model uses a hybrid architecture combining convolutional neural networks with global attention mechanisms to capture both local sequence patterns and global functional information.
+Self-interacting proteins (SIPs) are critical to cellular regulation, yet their experimental identification remains challenging due to high costs, inefficiencies, and frequent false positives. Leveraging recent advances in deep language models, we introduce SIP-BERT, a family of lightweight transformer-based models trained on organism-specific self-interaction datasets curated from existing protein–protein interaction databases. We developed three variants SIP-BERT(H), SIP-BERT(Y), and SIP-BERT(HY)-trained on human, yeast, and combined datasets, respectively. These models significantly outperform existing methods, exceeding baseline accuracies by 18%, 8% and 15% respectively. SIP-BERT models also generalise effectively to under-annotated organisms such as the mouse and the fruit fly, achieving high recall despite minimal labelled data. Furthermore, structural analysis of predicted false positives using PDB-derived alpha-carbon distance maps reveals close spatial residue proximities, suggesting plausible but undocumented self-interactions. These results highlight the potential of SIP-BERT to uncover novel SIPs and expand our understanding of protein self-interaction across diverse species. 
+
+Benchmark datasets and all SIP-BERT models are available in this repository.
 
 ## Input Data Structure
 Organize your data as follows for each species (Human, Yeast, Fruitfly, Mouse):
