@@ -9,7 +9,7 @@ Self-interacting proteins (SIPs) are critical to cellular regulation, yet their 
 Benchmark datasets and all SIP-BERT models are available in this repository.
 
 ## Input Data Structure
-Organize your data as follows for each species (Human, Yeast, Fruitfly, Mouse):
+Protein self interaction data have been organized as follows for each species (Human, Yeast, Fruitfly, Mouse):
 ```
 Dataset/{Species}
 ├── GO_annotation_{species}.csv
