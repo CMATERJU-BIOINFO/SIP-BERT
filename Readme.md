@@ -1,7 +1,7 @@
 # SIP-BERT : A multi-organism deep strategy for predicting self interaction in proteins
 
+![Workflow1](https://github.com/user-attachments/assets/4e0f83c3-fd84-44b9-ba33-2dffafea6e3f)
 
-![Workflow](https://github.com/user-attachments/assets/856f44e9-e8ed-455a-bde7-427285ee164a)
 
 
 ## Project Overview
